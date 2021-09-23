@@ -10,30 +10,8 @@ namespace Chessington.GameEngine.Pieces
 
         public override IEnumerable<Square> GetAvailableMoves(Board board)
         {
-            Square currentPosition = board.FindPiece(this);
-            var availableSquares = new List<Square>();
+            return GetlateralMoves(board);
             
-            //Movement of Rook
-            for (int i = currentPosition.Row + 1; i <= GameSettings.BoardSize; i++)
-            {
-                availableSquares.Add(Square.At(i, currentPosition.Col));
-
-            }
-            for (int i = currentPosition.Row - 1; i >= 0; i--)
-            {
-                availableSquares.Add(Square.At(i, currentPosition.Col));
-            }
-            for (int i = currentPosition.Col + 1; i <= GameSettings.BoardSize; i++)
-            {
-                availableSquares.Add(Square.At(currentPosition.Row, i));
-
-            }
-            for (int i = currentPosition.Col - 1; i >= 0; i--)
-            {
-                availableSquares.Add(Square.At(currentPosition.Row, i));
-            }
-
-            return availableSquares;
         }
     }
 }
