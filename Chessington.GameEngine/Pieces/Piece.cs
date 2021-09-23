@@ -20,5 +20,30 @@ namespace Chessington.GameEngine.Pieces
             var currentSquare = board.FindPiece(this);
             board.MovePiece(currentSquare, newSquare);
         }
+
+        protected IEnumerable<Square> GetAvailableDiagonalMoves(Board board)
+        {
+            var moves = GetAvailableMovesInDirection(board, s => Square.At(s.Row + 1, s.Col + 1)).ToList();
+            moves.AddRange(GetAvailableMovesInDirection(board, s => Square.At(s.Row - 1, s.Col + 1)));
+            moves.AddRange(GetAvailableMovesInDirection(board, s => Square.At(s.Row + 1, s.Col - 1)));
+            moves.AddRange(GetAvailableMovesInDirection(board, s => Square.At(s.Row - 1, s.Col - 1)));
+            return moves;
+        }
+
+        private IEnumerable<Square> GetAvailableMovesInDirection(Board board, Func<Square, Square> iterator)
+        {
+            var location = board.FindPiece(this);
+            var square = iterator(location);
+            while (board.SquareIsAvailable(square)
+                || (board.SquareIsOccupied(square) && board.GetPiece(square).Player != Player))
+            {
+                yield return square;
+                if (board.GetPiece(square) != null)
+                {
+                    break;
+                }
+                square = iterator(square);
+            }
+        }
     }
 }

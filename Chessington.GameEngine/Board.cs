@@ -25,7 +25,27 @@ namespace Chessington.GameEngine
         {
             board[square.Row, square.Col] = pawn;
         }
-    
+
+        public bool SquareIsAvailable(Square square)
+        {
+            return HasSquare(square)
+                && GetPiece(square) == null;
+        }
+
+        public bool SquareIsOccupied(Square square)
+        {
+            return HasSquare(square)
+                && GetPiece(square) != null;
+        }
+
+        public bool HasSquare(Square square)
+        {
+            return square.Col >= 0
+                && square.Row >= 0
+                && square.Col < GameSettings.BoardSize
+                && square.Row < GameSettings.BoardSize;
+        }
+
         public Piece GetPiece(Square square)
         {
             return board[square.Row, square.Col];
