@@ -13,6 +13,8 @@ namespace Chessington.GameEngine.Pieces
             Square newPosition;
             Square currentPosition = board.FindPiece(this);
             var availableSquares = new List<Square>();
+
+
             if (Player == Player.White)
             {
                 newPosition = Square.At(currentPosition.Row - 1, currentPosition.Col);
